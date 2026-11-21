@@ -18,13 +18,13 @@ Confirm that `todoapp-service` and `todoapp-nodeport-service` have a ready endpo
 
 ## Call the ClusterIP service from BusyBox
 
-The service DNS name below resolves inside the cluster. Port 80 on the service forwards to port 8080 on a matching application pod.
+The service DNS name below resolves inside the cluster. Port 80 on the service forwards to port 8000 on a matching application pod.
 
 ```sh
-kubectl -n todoapp exec busybox -- curl -i http://todoapp-service.todoapp.svc.cluster.local/
+kubectl -n todoapp exec busybox -- wget -qO- http://todoapp-service.todoapp.svc.cluster.local/
 ```
 
-The response should contain an HTTP status and the application's HTML. You can also request `/api/` to see the API.
+The response should contain the application's HTML. You can also request `/api/` to see the API.
 
 ## Access the service with port-forward
 
@@ -44,4 +44,4 @@ Find an IP address for a cluster node:
 kubectl get nodes -o wide
 ```
 
-From a machine that can reach that node, open `http://<node-ip>:30080/` or `http://<node-ip>:30080/api/`. The NodePort service forwards port 30080 to port 8080 on a matching application pod. Node reachability depends on your cluster and network configuration; for example, with Minikube, `minikube service todoapp-nodeport-service -n todoapp --url` can provide a reachable URL.
+From a machine that can reach that node, open `http://<node-ip>:30080/` or `http://<node-ip>:30080/api/`. The NodePort service forwards port 30080 to port 8000 on a matching application pod. Node reachability depends on your cluster and network configuration; for example, with Minikube, `minikube service todoapp-nodeport-service -n todoapp --url` can provide a reachable URL.
